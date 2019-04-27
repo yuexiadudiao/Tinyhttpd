@@ -10,10 +10,10 @@
 
 ![](./struct.png)
 
-我们可以知道：
+从这个项目中，我们可以知道：
 
-1.所谓httpserver其实就是处理client_socket的回调函数
+1. 所谓httpserver其实就是处理client_socket的回调函数
 
-2.所谓的处理client_socket其实就是从socket中读http协议请求报文字符串，根据协议解析做不同的操作，然后用结果构造http协议响应报文字符串，最后写入socket
+2. 所谓的处理client_socket其实就是从socket中读http协议请求报文字符串，根据协议解析做不同的操作，然后用结果构造http协议响应报文字符串，最后写入socket，对socket的读写像极了文件IO
 
-3.所谓的静态网页就是，打开一个预先写好的html文件然后将html内容写入到http响应报文；所谓的cgi动态网页，其实是一个控制台程序，根据不同的input生成不同的output html页，这样即使访问同一个cgi页面，不同操作的用户会看到不同的界面
+3. 所谓的静态网页就是，打开一个预先写好的html文件然后将html内容写入到http响应报文；所谓的cgi动态网页，其实是一个控制台程序，根据不同的input生成不同的output html页，这样即使访问同一个cgi页面，不同操作的用户会看到不同的界面
