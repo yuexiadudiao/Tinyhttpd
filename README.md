@@ -1,6 +1,6 @@
-#httpserver学习
+# httpserver学习
 
-##1.目的
+## 1.目的
 
 通过研读一个简单的httpserver源码理解httpserver本质。
 
