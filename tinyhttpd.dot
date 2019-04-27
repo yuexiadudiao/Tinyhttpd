@@ -1,0 +1,34 @@
+digraph tinyhttpd{
+rankdir=LR;
+node [shape=record];
+
+main  [label="main|1.create server_socket and listen|<2>2.accept a server_socket|<3>3.run accept_request as a thread to handle the client_socket"];
+startup [label="<0>startup|1.create a server_socket|2.bind local port|3.listen socket"];
+unimplemented [label="<0>unimplemented|1.write unimplemented page http response string to client_socket"];
+bad_request [label="<0>bad_request|1.write 400 page http response string to client_socket"];
+not_found [label="<0>not_found|1.write 404 page http response string to client_socket"];
+serve_file [label="<0>serve_file|<1>1.read and discard the rest of client http request|2.open file and get a FILE* pointer|<3>3.read file and write to client_socket"];
+cat [label="<0>cat|1.read a line from file|2.write to client_socket|3.repeate untill meet the file tail flag"];
+headers [label="<0>headers|1.write normal http response head to client_socket"]
+cannot_execute [label="<0>cannot_execute|1.write cannot_excute_cgi http response string to client_socket"];
+get_line [label="<0>get_line|1.get a char from client_socket|2.repeate untill get an enter"];
+accept_request [label="<0>accept_request|1.read client_socket to get http method|<2>2.if method is not support|3.read client_socket to get url|4.get url param if method is GET|<5>5.return 404 if path is invalid|6.if path is directory return index.html|<7>7.if path is cgi excute and return cgi|<8>8.if path is html  read and return html"];
+execute_cgi [label="<0>execute_cgi|1.discard all if method is GET|2.read content_length from client_socket if method is POST|3.create two pipes|4.fork()|5.child run cgi scripts|6.parent wirte to pipe,then read pipe"];
+
+main:2->startup:0;
+main:3->accept_request:0;
+
+accept_request:2->unimplemented:0;
+accept_request:7->execute_cgi:0;
+accept_request:8->serve_file:0;
+accept_request->get_line:0;
+accept_request:5->not_found:0;
+
+execute_cgi->cannot_execute:0;
+execute_cgi->bad_request:0;
+execute_cgi->get_line:0;
+
+serve_file:1->get_line:0;
+serve_file->headers:0;
+serve_file:3->cat:0;
+}
