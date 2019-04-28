@@ -10,9 +10,11 @@
 
 ![](./struct.png)
 
+## 3.结论
+
 从这个项目中，我们可以知道：
 
-1. 所谓httpserver其实就是处理client_socket的回调函数
+1. 所谓httpserver其实就是处理client_socket的**回调函数**
 
 2. 所谓的处理client_socket其实就是从socket中读http协议请求报文字符串，根据协议解析做不同的操作，然后用结果构造http协议响应报文字符串，最后写入socket，对socket的读写像极了文件IO
 
